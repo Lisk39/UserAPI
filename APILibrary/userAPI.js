@@ -18,11 +18,11 @@ addUser: async function add_user(client, userData)
 
     const collection = await DB.collection('Users'); // or DB.createCollection(nameOfCollection);
 
-    const emailExists = await collection.countDocuments({ Email: userData.Email }); // check if uname taken
+    const emailExists = await collection.countDocuments({ Email: userData.Email }); // check if email used
 
     
     
-    //uname is not taken
+    //email is not taken
     if (emailExists == 0) { 
         //add permissions field
         userData.Permission = "User";
@@ -32,7 +32,7 @@ addUser: async function add_user(client, userData)
         return userData;
     
     }
-    //uname taken
+    //email already used
     else {
         throw new Error("Email taken");
     }
@@ -47,11 +47,11 @@ verifyPass: async function verifyPass(client, login)
     /*
         assumption is that the incoming data from the frontend is a json in this format:
 
-        "UserName": "Broseph",
+        "Email": "someEmail@domain.com",
         "Password":  "986864656588" (hashed or encrypted in frontend before being sent to api)
 
     */
-    const DB = client.db('Users'); //conecct to DB
+    const DB = client.db('Users'); //connect to DB
 
     const collection = await DB.collection('Users'); // or DB.createCollection(nameOfCollection);
 
@@ -75,12 +75,7 @@ verifyPass: async function verifyPass(client, login)
     }
     //passwords do not match
     else{
-        //{
-            //add this to overall profile above and below
-                // userExists:False
-                   
-
-        // }
+        
         throw new Error("Wrong Password")
     }
     

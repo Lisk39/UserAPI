@@ -24,9 +24,6 @@ var app = express();
 
 async function main() {
     
-
-    const Mongouri = dbAPI.url;
-
     
    
     try {
